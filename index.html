@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-select.min.css">
+    <script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <script src="bootstrap/js/bootstrap-select.min.js"></script>
+    <script src="bootstrap/js/defaults-zh_CN.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/index.css">
+    <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script>
+</head>
+
+<body style="background-image: url(images/bg.jpg);">
+<canvas id="canvas" class="center-block" width="600px" height="600px"></canvas>
+    <div class="container">
+        <div class="row">
+            <div class="center-block" style="width: 4rem"><input type="button" class="btn-primary btn-sm   btn-mov" value="移动" id="move" onclick="move()"></div>
+        </div>
+
+        <div class="row" style="margin-top: 2rem">
+            <div class="col-sm-offset-2 col-sm-6 col-xs-12 col-xs-offset-1">
+                <span class="myfont">条纹样式:&nbsp;&nbsp;</span>
+                <select class="selectpicker show-tick" id="style" onchange="stripeSelect(this.options[this.options.selectedIndex].text)">
+                    <option value="">竖条纹</option>
+                    <option value="">横条纹</option>
+                    <option value="">行列(网格)条纹</option>
+                    <option value="">同心圆条纹</option>
+                </select>
+            </div>
+            <div class="col-sm-offset-9 col-xs-offset-12 hidden-xs" id="fullscreen"><svg onclick="fullScreen()" t="1584845026614" class="icon fullButton" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1151" width="100" height="100"><path d="M722.767098 340.246081l243.992255-243.224783-0.831428 137.889201a20.46593 20.46593 0 0 0 20.465929 21.169446h14.645931c11.448129-0.31978 20.977578-7.035163 21.169446-18.675161l0.63956-205.298857c0-0.127912-0.831428-0.255824-0.831428-0.447692L1023.296484 21.233402a19.186809 19.186809 0 0 0-4.860659-14.581975 19.570545 19.570545 0 0 0-14.709887-5.883955l-10.360876 0.127912a0.63956 0.63956 0 0 0-0.511649 0.191869L789.217413 0a21.872962 21.872962 0 0 0-21.169446 21.361314v14.709887c1.087253 12.279558 11.512085 21.553182 23.855599 21.169446l134.115796 0.383736-243.352695 242.393355a28.460433 28.460433 0 0 0 40.164387 40.164387v0.127912z m-421.214415 342.932234l-244.184124 242.393354 0.831429-137.121728a20.46593 20.46593 0 0 0-20.46593-21.233402H22.384611c-11.448129 0.383736-20.977578 7.035163-21.169446 18.739116L0.575604 991.318469c0 0.191868 0.831428 0.383736 0.831429 0.511648l-1.215165 10.424833a19.186809 19.186809 0 0 0 4.860658 14.645931 19.826369 19.826369 0 0 0 14.645931 5.883954l10.424833-0.191868a0.63956 0.63956 0 0 0 0.511648-0.127912L234.974455 1023.296484a21.936918 21.936918 0 0 0 21.169446-21.361314v-14.645931a23.216039 23.216039 0 0 0-23.855599-21.10549L98.172506 965.736056l243.160827-242.393354a28.460433 28.460433 0 0 0-19.826369-48.606583 27.692961 27.692961 0 0 0-19.954281 8.37824z m721.424021 308.140154l-0.575605-205.362814c-0.31978-11.512085-9.721317-18.355381-21.10549-18.739116h-14.709887c-11.384173-0.31978-20.46593 9.785273-20.274061 21.233402l0.831428 137.825245-244.184123-243.032915a28.396477 28.396477 0 0 0-40.164387 40.164387l243.288739 242.393354-134.115796 0.319781a23.407907 23.407907 0 0 0-23.855599 21.169446v14.645931c0.383736 11.512085 9.593405 20.849666 21.10549 21.361314l203.380176-0.831429 0.511648 0.127912 10.360877 0.191868a18.547249 18.547249 0 0 0 19.50659-20.465929l-1.151209-10.424833c0.191868-0.191868 1.023296-0.31978 1.023296-0.511648h0.063956zM98.300418 57.560427L232.48017 57.304603a23.471863 23.471863 0 0 0 23.855599-21.10549v-14.709887A22.128786 22.128786 0 0 0 235.166323 0l-204.659297 0.831428C30.315158 0.831428 30.187246 0.63956 30.059334 0.63956L19.570545 0.511648a18.547249 18.547249 0 0 0-19.442633 20.46593L1.279121 31.402411C1.279121 31.594279 0.447692 31.722191 0.447692 31.978015L0.95934 237.276872c0.127912 11.448129 9.721317 18.291425 21.169446 18.675161h15.349448c11.448129 0.31978 20.46593-9.785273 20.465929-21.233402l-0.63956-137.121729L301.360814 340.246081a28.396477 28.396477 0 1 0 40.164387-40.164387L98.364374 57.560427z" fill="#8a8a8a" p-id="1152"></path></svg></div>
+        </div>
+        <div class="row" style="margin-top: 1rem">
+            <div class="col-sm-offset-2 col-sm-4 col-xs-offset-1">
+                <span class="myfont">A条纹颜色:</span>
+                <input type="text" class="input" placeholder="000000" onchange="colorAchange(this.value)">
+                <span class="littlefont">如: 000000</span>
+            </div>
+
+            <div class="col-sm-4 col-xs-offset-1">
+                <span class="myfont">A条纹宽度:</span>
+                <input type="text" class="input" placeholder="20" onchange="widthAchange(this.value)">
+                <span class="myfont">pixels</span>
+            </div>
+
+            <div class="col-sm-offset-2 col-sm-4 col-xs-offset-1">
+                <span class="myfont">B条纹颜色:</span>
+                <input type="text" class="input" placeholder="ffffff" onchange="colorBchange(this.value)">
+                <span class="littlefont">如: 000000</span>
+            </div>
+
+            <div class=" col-sm-4 col-xs-offset-1">
+                <span class="myfont">B条纹宽度:</span>
+                <input type="text" class="input" placeholder="20" onchange="widthBchange(this.value)">
+                <span class="myfont">pixels</span>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-offset-1 col-sm-offset-2 col-sm-8 col-xs-offset-1">
+                <span class="myfont">移动模式：</span>
+                <select class=" selectpicker show-tick " data-divider="true" id="move_model" title="" onchange="">
+                    <option  value="">手动</option>
+                    <option value="">自动</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-xs-offset-1 col-sm-offset-2 col-sm-3">
+                <span class="myfont">移动步距：</span>
+                <input  onchange="lenthChange(this.value)" type="text" class="input" placeholder="[0,∞]" style="outline: none;width: 115px;">
+                <span style="font-weight: bold;">pixels</span>
+            </div>
+
+            <div class="col-sm-3 col-xs-offset-1">
+                <span class="myfont">时间间隔：</span>
+                <input  onchange="timeChange(this.value)" type="text" class="input" placeholder="[0,∞]" style="outline: none;width: 115px;">
+                <span style="font-weight: bold;">s</span>
+            </div>
+
+            <div class="col-xs-offset-1" style="padding-left: 15px">
+                    <span class="myfont">移动总时间：</span>
+                    <input onchange="totalTimeChange(this.value)" type="text" class="input" placeholder="[0,∞]" style="outline: none;width: 115px;">
+                    <span style="font-weight: bold;">s</span>
+            </div>
+
+
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-offset-1 col-sm-offset-2 col-sm-8">
+                <span class="myfont">条纹亮度分布：</span>
+                <select class=" selectpicker show-tick " data-divider="true" id="fenbu" name="" onchange="BrightnessAnalysis(this.options[this.options.selectedIndex].text)">
+                    <option  value="0">二值型</option>
+                    <option  value="1">正弦分布</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    let hor_offset = 0;         //垂直条纹的水平位移
+    let ver_offset = 0;         //水平条纹的垂直位移
+    let a_width = 20;
+    let b_width = 20;
+    let a_color = "black";
+    let b_color = "white";
+    let ca = document.getElementById("canvas");
+    let canvas_height = ca.height;
+    let canvas_width = ca.width;
+    let canvas = ca.getContext("2d");
+    let list_of_r = [];
+    let list_of_sin_r=[];
+    let iter_time = canvas_width/(a_width+b_width)+1;
+    for(let i =0;i<iter_time;i++){
+        list_of_r.push((a_width+b_width)*i);
+        list_of_sin_r.push((a_width+b_width)*i);
+    }
+    if(ca) {
+
+        $("#canvas").css("background-color",b_color);
+
+        function drawhor() {
+            canvas.clearRect(0,0,canvas_height,canvas_height);
+
+            canvas.translate(hor_offset, 0);
+            let iter_time = canvas_width / (a_width + b_width);
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillStyle = a_color;
+                canvas.fillRect((a_width + b_width) * i, 0, a_width, canvas_height);
+                canvas.fillStyle = b_color;
+                canvas.fillRect((a_width + b_width) * i + a_width, 0, b_width, canvas_height);
+            }
+
+            canvas.scale(-1, 1);
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillStyle = b_color;
+                canvas.fillRect((a_width + b_width) * i, 0, b_width, canvas_height);
+                canvas.fillStyle = a_color;
+                canvas.fillRect((a_width + b_width) * i + b_width, 0, a_width, canvas_height);
+            }
+
+            // 恢复状态
+            canvas.scale(-1, 1);
+            canvas.translate(-hor_offset, 0);
+        }
+
+        function drawsinhor() {
+
+            // canvas.clearRect(0,0,canvas_width,canvas_height);
+            let width = a_width*2;
+
+            canvas.translate(hor_offset, 0);
+            let iter_time = canvas_width /width;
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillStyle = a_color;
+                for(let j=0;j<width;j+=0.1){
+                    let m = (j/width)*2*Math.PI;
+                    canvas.globalAlpha= 0.5 * Math.sin(m) + 0.5;
+                    canvas.fillRect((width) * i+j, 0,0.1, canvas_height);
+                }
+                canvas.globalAlpha = 0;
+            }
+
+            canvas.scale(-1, 1);
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillStyle = a_color;
+                for(let j=0;j<width;j+=0.1){
+                    let m = (j/width)*2*Math.PI+Math.PI;
+                    canvas.globalAlpha= 0.5 * Math.sin(m) + 0.5;
+                    canvas.fillRect((width) * i+j, 0,0.1, canvas_height);
+                }
+                canvas.globalAlpha = 0;
+            }
+
+            // 恢复状态
+            canvas.scale(-1, 1);
+            canvas.translate(-hor_offset, 0);
+            canvas.globalAlpha = 1;
+        }
+
+        // setInterval(function () {
+        //     hor_offset+=10;
+        //     hor_offset%=canvas_width;
+        //     drawsinhor();
+        // },100);
+
+        function drawver() {
+            canvas.fillStyle=b_color;
+            canvas.fillRect(0,0,canvas_width,canvas_height);
+            canvas.translate(0, ver_offset);
+            let iter_time = canvas_height / (a_width + b_width);
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillStyle = a_color;
+                canvas.fillRect(0, (a_width + b_width) * i, canvas_width, a_width);
+                canvas.fillStyle = b_color;
+                canvas.fillRect(0, (a_width + b_width) * i + a_width, canvas_width, b_width);
+            }
+
+            canvas.scale(1, -1);
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillStyle = b_color;
+                canvas.fillRect(0, (a_width + b_width) * i, canvas_width, b_width);
+                canvas.fillStyle = a_color;
+                canvas.fillRect(0, (a_width + b_width) * i + b_width, canvas_width, a_width);
+            }
+
+            // 恢复状态
+            canvas.scale(1, -1);
+            canvas.translate(0, -ver_offset);
+        }
+
+        function drawsinver() {
+
+            let width = a_width*2;
+
+            // canvas.clearRect(0,0,canvas_width,canvas_height);
+
+            canvas.fillStyle=b_color;
+            canvas.fillRect(0,0,canvas_width,canvas_height);
+
+            canvas.translate(0,ver_offset);
+            let iter_time = canvas_height/width;
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillStyle = a_color;
+                for(let j=0;j<width;j+=0.1){
+                    let m = (j/width)*2*Math.PI;
+                    canvas.globalAlpha= 0.5 * Math.sin(m) + 0.5;
+                    canvas.fillRect(0,(width) * i+j,canvas_width, 0.1);
+                }
+                canvas.globalAlpha = 0;
+            }
+
+            canvas.scale(1, -1);
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillStyle = a_color;
+                for(let j=0;j<width;j+=0.1){
+                    let m = (j/width)*2*Math.PI+Math.PI;
+                    canvas.globalAlpha= 0.5 * Math.sin(m) + 0.5;
+                    canvas.fillRect(0,(width) * i+j,canvas_width, 0.1);
+                }
+                canvas.globalAlpha = 0;
+            }
+
+            // 恢复状态
+            canvas.scale(1, -1);
+            canvas.translate(0, -ver_offset);
+            canvas.globalAlpha = 1;
+        }
+
+        // setInterval(function () {
+        //     ver_offset += 10;
+        //     ver_offset%=canvas_width;
+        //     drawsinver();
+        // },100);
+
+
+        function drawgrid(){
+            canvas.fillStyle = b_color;
+            canvas.fillRect(0, 0, canvas_width, canvas_height);
+
+            canvas.fillStyle = a_color;
+            // 画垂直条纹
+            canvas.translate(hor_offset, 0);
+            let iter_time = canvas_width / (a_width + b_width);
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillRect((a_width + b_width) * i + b_width, 0, a_width, canvas_height);
+            }
+
+            canvas.scale(-1, 1);
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillRect((a_width + b_width) * i, 0, a_width, canvas_height);
+            }
+
+            // 恢复状态
+            canvas.scale(-1, 1);
+            canvas.translate(-hor_offset, 0);
+
+
+            //画水平条纹
+            canvas.translate(0, ver_offset);
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillRect(0, (a_width + b_width) * i + b_width, canvas_width, a_width);
+            }
+
+            canvas.scale(1, -1);
+            for (let i = 0; i < iter_time; i++) {
+                canvas.fillRect(0, (a_width + b_width) * i, canvas_width, a_width);
+            }
+
+            // 恢复状态
+            canvas.scale(1, -1);
+            canvas.translate(0, -ver_offset);
+        }
+
+        function drawsingrid() {
+            canvas.clearRect(0,0,canvas_width,canvas_height);
+            // canvas.fillStyle = a_color;
+            // // 画垂直条纹
+            // canvas.translate(hor_offset, 0);
+            // let iter_time = canvas_width /width;
+            // for (let i = 0; i < iter_time; i++) {
+            //     canvas.fillStyle = a_color;
+            //     for(let j=0;j<width;j+=0.1){
+            //         let m = (j/width)*2*Math.PI;
+            //         canvas.globalAlpha= 0.5 * Math.sin(m) + 0.5;
+            //         canvas.fillRect((width) * i+j, 0,0.1, canvas_height);
+            //     }
+            //     canvas.globalAlpha = 0;
+            // }
+            //
+            // canvas.scale(-1, 1);
+            // for (let i = 0; i < iter_time; i++) {
+            //     canvas.fillStyle = a_color;
+            //     for(let j=0;j<width;j+=0.05){
+            //         let m = (j/width)*2*Math.PI+Math.PI;
+            //         canvas.globalAlpha= 0.5 * Math.sin(m) + 0.5;
+            //         canvas.fillRect((width) * i+j, 0,0.05, canvas_height);
+            //     }
+            //     canvas.globalAlpha = 0;
+            // }
+            //
+            // // 恢复状态
+            // canvas.scale(-1, 1);
+            // canvas.translate(-hor_offset, 0);
+            //
+            //
+            //
+            // //画水平条纹
+            // canvas.translate(0, ver_offset);
+            // for (let i = 0; i < iter_time; i++) {
+            //     canvas.fillStyle = a_color;
+            //     for(let j=0;j<width;j+=0.1){
+            //         let m = (j/width)*2*Math.PI;
+            //         canvas.globalAlpha= 0.5 * Math.sin(m) + 0.5;
+            //         canvas.fillRect(0,(width) * i+j,canvas_width, 0.1);
+            //     }
+            //     canvas.globalAlpha = 0;
+            // }
+            //
+            // canvas.scale(1, -1);
+            // for (let i = 0; i < iter_time; i++) {
+            //     canvas.fillStyle = a_color;
+            //     for(let j=0;j<width;j+=0.1){
+            //         let m = (j/width)*2*Math.PI+Math.PI;
+            //         canvas.globalAlpha= 0.5 * Math.sin(m) + 0.5;
+            //         canvas.fillRect(0,(width) * i+j,canvas_width, 0.1);
+            //     }
+            //     canvas.globalAlpha = 0;
+            // }
+            //
+            // // 恢复状态
+            // canvas.scale(1, -1);
+            // canvas.translate(0, -ver_offset);
+            drawsinhor();
+            drawsinver();
+        }
+        // setInterval(function () {
+        //     ver_offset += 10;
+        //     hor_offset += 10;
+        //     ver_offset %= canvas_width;
+        //     hor_offset %= canvas_width;
+        //     drawgrid();
+        // }, 100);
+
+
+
+
+        function drawcircle(r) {
+            canvas.strokeStyle=a_color;
+            if(r>=a_width+b_width){
+                for(let j=0;j<a_width;j+=0.1){
+                    canvas.beginPath();
+                    canvas.arc(canvas_width/2, canvas_height/2,r+j, 0, 2 * Math.PI);
+                    canvas.closePath();
+                    canvas.stroke();
+                }
+            }else{
+                if(r>a_width){
+
+                    canvas.beginPath();
+                    canvas.arc(canvas_width/2, canvas_height/2,r+a_width,0,2*Math.PI);
+                    canvas.closePath();
+                    canvas.fillStyle=a_color;
+                    canvas.fill();
+
+                    canvas.beginPath();
+                    canvas.arc(canvas_width/2, canvas_height/2,r,0,2*Math.PI);
+                    canvas.closePath();
+                    canvas.fillStyle=b_color;
+                    canvas.fill();
+
+                }else {
+                    canvas.beginPath();
+                    canvas.arc(canvas_width/2, canvas_height/2,r+a_width,0,2*Math.PI);
+                    canvas.closePath();
+                    canvas.fillStyle=a_color;
+                    canvas.fill();
+
+                    canvas.beginPath();
+                    canvas.arc(canvas_width/2, canvas_height/2,r,0,2*Math.PI);
+                    canvas.closePath();
+                    canvas.fillStyle=b_color;
+                    canvas.fill();
+                }
+                if(r-b_width>0){
+                    canvas.beginPath();
+                    canvas.arc(canvas_width/2, canvas_height/2,r-b_width,0,2*Math.PI);
+                    canvas.closePath();
+                    canvas.fillStyle=a_color;
+                    canvas.fill();
+                }
+            }
+            canvas.lineWidth=1;
+        }
+
+        // function drawsincircle(r) {
+        //
+        //     canvas.strokeStyle=a_color;
+        //
+        //     width = a_width+b_width;
+        //
+        //     for(let j=0;j<width;j+=0.5){
+        //         let m = (j/width)*Math.PI;
+        //         canvas.globalAlpha= 0.5 * Math.sin(m) + 0.5;
+        //         canvas.beginPath();
+        //         canvas.arc(canvas_width/2, canvas_height/2,r+j, 0, 2 * Math.PI);
+        //         canvas.closePath();
+        //         canvas.stroke();
+        //     }
+        //     canvas.globalAlpha = 0;
+        //
+        //     canvas.lineWidth=1;
+        //
+        // }
+
+        function  drawstaticcircle() {
+            canvas.clearRect(0,0,canvas_width,canvas_height);
+            for(let i=0;i<list_of_r.length;i++){
+                drawcircle(list_of_r[i]);
+            }
+        }
+        // console.log(list_of_sin_r);
+        // setInterval(function () {
+        //     canvas.clearRect(0, 0, canvas_width,canvas_height);
+        //     canvas.fillStyle=b_color;
+        //     canvas.fillRect(0,0,canvas_width,canvas_height);
+        //     for(let i=0;i<iter_time;i++){
+        //         drawsincircle(list_of_sin_r[i]);
+        //         list_of_sin_r[i]=list_of_sin_r[i]+1;
+        //         list_of_sin_r[i] %= canvas_width;
+        //     }
+        // },10);
+        // setInterval(function () {
+        //     canvas.clearRect(0, 0, canvas_width,canvas_height);
+        //     canvas.fillStyle=b_color;
+        //     canvas.fillRect(0,0,canvas_width,canvas_height);
+        //     for(let i=0;i<iter_time;i++){
+        //         drawcircle(list_of_r[i]);
+        //         list_of_r[i]=list_of_r[i]+1;
+        //         list_of_r[i] %= canvas_width;
+        //     }
+        // },10);
+
+
+    }
+</script>
+<script>
+    drawhor();
+
+    let offset = 20;
+    let total_time = 0;
+    let inter_time = 0;
+    let is_moving = false;
+    let mov__="";
+
+    function fresh(){
+        drawhor();
+        let value = $('#style option:selected').text();   //条纹发布选中的值; 0为二值，1为正弦
+        stripeSelect(value);
+    }
+
+    document.onselectstart = function() { //设置文字不可选中
+        return false;
+    }
+
+    function colorAchange(value) { //A条纹颜色输入框改变
+        a_color = value;
+        fresh();
+    }
+
+    function colorBchange(value) { //B条纹颜色输入框改变
+        b_color = value;
+        fresh();
+    }
+
+    function widthAchange(value) { //A条纹宽度输入框改变
+        a_width=parseInt(value);
+        iter_time = canvas_width/(a_width+b_width)+1;
+        list_of_r = [];
+        for(let i =0;i<iter_time;i++){
+            list_of_r.push((a_width+b_width)*i);
+            list_of_sin_r.push((a_width+b_width)*i);
+        }
+        fresh();
+    }
+
+    function widthBchange(value) { //B条纹颜色输入框改变
+        b_width=parseInt(value);
+        iter_time = canvas_width/(a_width+b_width)+1;
+        list_of_r = [];
+        for(let i =0;i<iter_time;i++){
+            list_of_r.push((a_width+b_width)*i);
+            list_of_sin_r.push((a_width+b_width)*i);
+        }
+        fresh();
+    }
+
+    function stripeSelect(value) { //条纹样式改变
+        move_btn.attr("disabled",false);
+        let fenbu = parseInt($('#fenbu option:selected').val());   //条纹发布选中的值; 0为二值，1为正弦
+        if(value==="竖条纹"){
+            if(fenbu===1){
+                canvas.clearRect(0,0,canvas_width,canvas_height);
+                drawsinhor();
+            }else{
+                drawhor();
+            }
+        }
+        else if(value==="横条纹"){
+            if(fenbu===1){
+                canvas.clearRect(0,0,canvas_width,canvas_height);
+                drawsinver();
+            }else{
+                canvas.clearRect(0,0,canvas_width,canvas_height);
+                drawver();
+            }
+        }
+        else if(value==="行列(网格)条纹"){
+            drawgrid();
+        }else if(value==="同心圆条纹"){
+            drawstaticcircle();
+        }
+    }
+
+    function lenthChange(value) { //移动步距输入框改变
+        offset = parseInt(value);
+    }
+
+    function timeChange(value) { //时间间隔输入框改变
+        inter_time = parseFloat(value);
+    }
+
+    function totalTimeChange(value) { //移动总时间输入框改变
+        total_time = parseFloat(value);
+    }
+
+    let move_btn = $("#move");
+    let aa="";
+    function move() { //手动移动按钮被点击
+        clearInterval(aa);
+        let model = $('#move_model option:selected').text();
+        let style = $('#style option:selected').text();
+        let fenbu = parseInt($('#fenbu option:selected').val());   //条纹发布选中的值; 0为二值，1为正弦
+        if (model=="手动"){
+            mo_ve(offset);
+        }else if(model=="自动"){
+            let iter_time = parseInt(total_time/inter_time);
+            let i_offset = offset;
+            if((style=="竖条纹"&&fenbu==1)||(style=="横条纹"&&fenbu==1)||(style=="同心圆条纹")){
+                div_time = (i_offset/2)*10; //毫秒
+            }else{
+                div_time = (i_offset)*10; //毫秒
+            }
+            let i = 1;
+            if(iter_time<=1){
+                mo_ve(offset);
+            }else{
+                mo_ve(i_offset);
+                aa= setInterval(function () {
+                    mo_ve(i_offset);
+                    i++;
+                    if(i>=iter_time){
+                        clearInterval(aa);
+                    }
+                },inter_time*1000+div_time)
+            }
+        }
+    }
+    function mo_ve(oo){
+        let off = oo||offset;
+        is_moving = false;
+        let value = $('#style option:selected').text();   //条纹样式
+        let fenbu = parseInt($('#fenbu option:selected').val());   //条纹发布选中的值; 0为二值，1为正弦
+        if(value=="竖条纹"){
+            if(fenbu===0){
+                movehor(off);
+            }else if(fenbu===1){
+                movesinhor(off);
+            }
+        }else if(value=="横条纹"){
+            if(fenbu===0){
+                movever(off);
+            }else if(fenbu===1){
+                movesinver(off);
+            }
+        }else  if(value==="行列(网格)条纹"){
+            movegrid(off);
+        }else if(value==="同心圆条纹"){
+            movecircle(off);
+        }
+    }
+
+    let is_fullscreen = false;
+    function fullScreen() { //全屏按钮被点击
+        is_fullscreen = true;
+        let ca = $("#canvas");
+        $('.container').css("margin-top","0px");
+        ca.css("position","absolute");
+        ca.css("margin-top","0px");
+        $("body").css("background","rgba(200,200,200,1)");
+        let  w = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        let  h = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        let width = 0;
+        if(w>h){width=h}else{width=w};
+        ca.css("width",width);
+        ca.css("height",width);
+
+        if(w>h){
+            ca.css("left",(w-h)/2);
+            ca.css("right",(w-h)/2);
+        }else{
+            ca.css("top",(h-w)/2);
+            ca.css("bottom",(h-w)/2);
+        }
+        $(".row").css("display","none");
+    }
+
+    $("#canvas").click(function () {
+        if(is_fullscreen){
+            is_fullscreen = false;
+            let ca = $("#canvas");
+            $('.container').css("margin-top","2rem");
+            ca.css("position","static");
+            ca.css("margin-top","3rem");
+            $("body").css("background","url(images/bg.jpg)");
+            ca.css("width","600px");
+            ca.css("height","600px");
+            ca.css("left",0);
+            ca.css("right",0);
+        }
+        $(".row").css("display","");
+    });
+
+    function BrightnessAnalysis(e) { //条纹亮度选择框的点击函数，需设初始为二值型
+        let value = $('#style option:selected').text();   //条纹发布选中的值; 0为二值，1为正弦
+        if(e==="二值型"){
+            if(value==="竖条纹"){
+                drawhor();
+            }else if(value ==="横条纹"){
+                drawver();
+            }else if(value==="行列(网格)条纹"){
+                drawgrid();
+            }else if(value==="同心圆条纹"){
+                drawstaticcircle();
+            }
+        }else{
+            if(value==="竖条纹"){
+                canvas.clearRect(0,0,canvas_width,canvas_height);
+                drawsinhor();
+            }else if(value ==="横条纹"){
+                canvas.clearRect(0,0,canvas_width,canvas_height);
+                drawsinver();
+            }else if(value==="行列(网格)条纹"){
+                drawgrid();
+            }else if(value==="同心圆条纹"){
+                drawstaticcircle();
+            }
+        }
+    }
+
+    function mobileMode(e) { //移动模式选择器的点击函数
+        if (e === '自动') { //自动模式下禁止点击移动按钮
+            move_btn.attr("disabled",true);
+
+        } else {
+            move_btn.attr("disabled",false);
+        }
+    }
+
+
+    function  movehor(offset) {
+        clearInterval(mov__);
+        let  x= 0;
+        is_moving = true;
+        mov__ = setInterval(function () {
+            hor_offset+=1;
+            hor_offset%=canvas_width;
+            drawhor();
+            x+=1;
+            if(x>=offset){
+                is_moving = false;
+                clearInterval(mov__);
+            }
+        },10);
+    }
+    function  movesinhor(offset) {
+        clearInterval(mov__);
+        let  x= 0;
+        is_moving = true;
+        mov__ = setInterval(function () {
+            hor_offset+=2;
+            hor_offset%=canvas_width;
+            canvas.clearRect(0,0,canvas_width,canvas_height);
+            drawsinhor();
+            x+=2;
+            if(x>=offset){
+                is_moving = false;
+                clearInterval(mov__);
+            }
+        },10);
+    }
+    function  movever(offset) {
+        clearInterval(mov__);
+        let x = 0;
+        is_moving = true;
+        mov__ = setInterval(function () {
+            ver_offset += 1;
+            ver_offset %= canvas_width;
+            drawver();
+            x += 1;
+            if (x >= offset) {
+                is_moving = false;
+                clearInterval(mov__);
+            }
+        }, 10);
+    }
+
+    function  movesinver(offset) {
+        clearInterval(mov__);
+        let x = 0;
+        is_moving = true;
+        mov__ = setInterval(function () {
+            ver_offset += 2;
+            ver_offset %= canvas_width;
+            canvas.clearRect(0,0,canvas_width,canvas_height);
+            drawsinver();
+            x += 2;
+            if (x >= offset) {
+                is_moving = false;
+                clearInterval(mov__);
+            }
+        }, 10);
+    }
+
+    function movegrid(offset) {
+        clearInterval(mov__);
+        let x = 0;
+        is_moving = true;
+        mov__ = setInterval(function () {
+            ver_offset += 1;
+            hor_offset += 1;
+            ver_offset %= canvas_width;
+            hor_offset %= canvas_width;
+            drawgrid();
+            x += 1;
+            if (x >= offset) {
+                is_moving = false;
+                clearInterval(mov__);
+            }
+        }, 10);
+    }
+
+    function  movecircle(offset) {
+        clearInterval(mov__);
+        let  x = 0;
+        is_moving = true;
+        mov__  = setInterval(function () {
+            canvas.clearRect(0, 0, canvas_width,canvas_height);
+            canvas.fillStyle=b_color;
+            canvas.fillRect(0,0,canvas_width,canvas_height);
+            for(let i=0;i<iter_time;i++){
+                drawcircle(list_of_r[i]);
+                list_of_r[i]=list_of_r[i]+2;
+                list_of_r[i] %= canvas_width;
+            }
+            x+=2;
+            if(x>=offset){
+                is_moving = false;
+                for(let i =0;i<iter_time;i++){
+                    list_of_r.push((a_width+b_width)*i);
+                    list_of_sin_r.push((a_width+b_width)*i);
+                }
+                clearInterval(mov__);
+            }
+        },10);
+    }
+</script>
+</body>
+</html>

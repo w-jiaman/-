@@ -1,0 +1,137 @@
+* {
+    color: #666;
+}
+
+.myfont {
+    font-weight: bold;
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.of{
+  
+    overflow: hidden;  
+    /* height: 100%; */
+}
+
+.fl {
+    float: left;
+}   
+
+.cf::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.open {
+    background-color: #f6f6f6;
+}
+
+.btn-default {
+    background-color: #f6f6f6;
+    /*调整下拉框列表 的颜色*/
+}
+
+a {
+    outline: none!important;
+}
+
+.row {
+    margin-top: 3px;
+    /* margin-bottom: 5px; */
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.input {
+    border: 0;
+    width: 100px;
+    font-family: 'Century Gothic';
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    padding-left: 10px;
+    outline: none;
+}
+
+#move {
+    border: 1px solid transparent;
+    background: #5A83E5;
+    border-radius: 0% !important;
+    outline: none;
+    color: #fff;
+    padding: 0 24px;
+    height: 32px;
+    margin-top: 10px;
+}
+
+#move:hover {
+    background: #486fca;
+}
+
+#move:active {
+    background: rgba(60, 119, 195, 0.712);
+}
+
+.banmove:hover {
+    cursor: not-allowed;
+}
+
+button {
+    outline: none!important;
+    width: 150px!important;
+}
+
+.littlefont {
+    font-size: 0.8em;
+}
+
+.fullButton {
+    width: 50px;
+    height: 50px;
+}
+
+.fullButton:active {
+    box-shadow: 0px 0px 5px #00000070;
+}
+
+#canvas{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+    z-index: 1000;
+        
+}
+
+.btn-mov{
+    width:10rem;
+    line-height: 2.7rem;
+    font-size: 15px;
+}
+
+.container{
+    margin-top: 2rem;
+    margin-bottom: 12rem;
+}
+
+
+input[type="text"]{
+    height: 3.2rem;
+    margin-top: 1.3rem;
+    margin-bottom: 1.3rem;
+}
+
+#fullscreen:hover{
+    cursor: pointer;
+}
+
+@media screen and(max-width: 768px) {
+    .fullButton{
+        display: none;
+    }
+}
+
